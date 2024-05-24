@@ -8,7 +8,8 @@ const TeacherSchema = new Schema(
     password: { type: String, required: true },
     subject: {
       type: String,
-      enum: ["Matemática, História, Geografia, Gramática"],
+      enum: ["Matemática", "História", "Geografia", "Gramática"],
+      required: true,
     },
   },
   {

@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require("express");
 // const conn = require("./db/conn");
 const cors = require("cors");
@@ -9,6 +11,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
+
+require("./db/conn");
 
 //Routes
 app.use("/", teacherRoutes);
