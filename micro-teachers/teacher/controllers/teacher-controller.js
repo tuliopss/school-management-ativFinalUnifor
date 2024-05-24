@@ -63,7 +63,7 @@ module.exports = class TeacherController {
   static async login(req, res) {
     const { email, password } = req.body;
 
-    const teacher = await Teacher.findOne({ where: { email: email } });
+    const teacher = await Teacher.findOne({ email: email });
 
     if (!teacher) {
       res.status(404).json({ errors: ["Usuário não encontrado"] });
@@ -77,11 +77,11 @@ module.exports = class TeacherController {
       return;
     }
 
-    // res.status(201).json({
-    //   id: teacher.id,
-    //   token: TeacherController.generateToken(teacher.id),
-    // });
-    await createUserToken(teacher, req, res);
+    res.status(201).json({
+      id: teacher.id,
+      token: TeacherController.generateToken(teacher.id),
+    });
+    // await createUserToken(teacher, req, res);
   }
 
   static async updateTeacher(req, res) {
