@@ -19,12 +19,12 @@ const httpProxy = require("express-http-proxy");
 const app = express();
 const port = 3001;
 const { TEACHERS_API_URL } = require("./urls/urls");
-const authGuard = require("./middlewares/authGuard");
+const authGuard = require("../micro-teachers/teacher/middlewares/authGuard");
 const teacherServiceProxy = httpProxy(TEACHERS_API_URL);
 
 app.get("/", (req, res) => res.send("Hello Gateway API"));
 
-app.use("/teacher", authGuard, (req, res, next) => {
+app.use("/teacher", (req, res, next) => {
   teacherServiceProxy(req, res, next);
 });
 
