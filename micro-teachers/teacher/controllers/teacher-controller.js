@@ -116,7 +116,7 @@ module.exports = class TeacherController {
   }
 
   static async getCurrentUser(req, res) {
-    const user = req.teacher;
+    const user = req.user;
 
     res.status(200).json(user);
   }

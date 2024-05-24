@@ -12,6 +12,7 @@ const authGuard = require("../middlewares/authGuard");
 
 router.get("/teste", TeacherController.testeMicro);
 router.get("/", authGuard, TeacherController.getAllTeachers);
+router.get("/profile", authGuard, TeacherController.getCurrentUser);
 router.post("/register", TeacherController.register);
 router.post("/login", TeacherController.login);
 
