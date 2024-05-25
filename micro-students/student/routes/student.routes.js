@@ -5,6 +5,7 @@ const authGuard = require("../../middlewares/authGuard");
 router.get("/", authGuard, StudentController.getAllStudents);
 router.get("/:id", authGuard, StudentController.getStudentById);
 router.post("/", authGuard, StudentController.createStudent);
+router.patch("/:id", authGuard, StudentController.updateStudent);
 router.delete("/:id", authGuard, StudentController.deleteStudent);
 // router.post("/register", StudentController.register);
 // router.post("/login", StudentController.login);

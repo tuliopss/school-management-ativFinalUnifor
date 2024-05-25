@@ -7,7 +7,7 @@ const Student = require("../models/student.schema");
 
 module.exports = class StudentController {
   static async createStudent(req, res) {
-    const { name, email, age, registration } = req.body;
+    const { name, email, age, grade, registration } = req.body;
 
     const checkEmail = await Student.findOne({ email: email });
     const checkRegistration = await Student.findOne({
@@ -28,6 +28,7 @@ module.exports = class StudentController {
       name,
       email,
       age,
+      grade,
       registration,
     };
 
@@ -89,9 +90,9 @@ module.exports = class StudentController {
 
   static async updateStudent(req, res) {
     const id = req.params.id;
-    const { nome, idade } = req.body;
+    const { name, age, grade } = req.body;
 
-    const student = await Student.findByPk(id);
+    const student = await Student.findById(id);
 
     if (!student) {
       res.status(404).json({ errors: ["Estudante não encontrado."] });
@@ -99,30 +100,32 @@ module.exports = class StudentController {
     }
 
     const updatedStudent = {
-      nome,
-      idade,
-      categoria: StudentController.checkCategory(idade),
+      name,
+      age,
+      grade,
     };
-
     try {
-      await Student.update(updatedStudent, { where: { id: id } });
+      console.log(updatedStudent);
+
+      await Student.findByIdAndUpdate(id, updatedStudent);
 
       res.status(200).json({ message: "Estudante atualizado com sucesso." });
     } catch (error) {
+      console.log(error);
       res
         .status(404)
         .json({ errors: ["Houveu um erro, tente novamente mais tarde"] });
     }
   }
 
-  static async studentPresence(req, res) {
-    const id = req.params.id;
-    const student = await Student.findByPk(id);
+  // static async studentPresence(req, res) {
+  //   const id = req.params.id;
+  //   const student = await Student.findByPk(id);
 
-    student.presenca = !student.presenca;
-    await student.save();
-    // await Student.update(student, { where: { id: id } });
+  //   student.presenca = !student.presenca;
+  //   await student.save();
+  //   // await Student.update(student, { where: { id: id } });
 
-    res.status(200).json({ message: "Presença confirmada." });
-  }
+  //   res.status(200).json({ message: "Presença confirmada." });
+  // }
 };
