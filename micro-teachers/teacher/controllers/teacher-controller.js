@@ -41,7 +41,7 @@ module.exports = class TeacherController {
       password: passwordHash,
       subject,
     });
-    // console.log(teacher);
+    console.log(teacher);
 
     try {
       const newTeacher = await teacher.save();
@@ -62,25 +62,29 @@ module.exports = class TeacherController {
 
   static async login(req, res) {
     const { email, password } = req.body;
+    try {
+      const teacher = await Teacher.findOne({ email: email });
 
-    const teacher = await Teacher.findOne({ email: email });
+      if (!teacher) {
+        res.status(404).json({ errors: ["Usuário não encontrado"] });
+        return;
+      }
 
-    if (!teacher) {
-      res.status(404).json({ errors: ["Usuário não encontrado"] });
-      return;
+      const checkPassword = await bcrypt.compare(password, teacher.password);
+
+      if (!checkPassword) {
+        res.status(422).json({ errors: ["Informe a senha correta"] });
+        return;
+      }
+
+      res.status(201).json({
+        id: teacher.id,
+        token: TeacherController.generateToken(teacher.id),
+      });
+    } catch (error) {
+      console.log(error);
     }
 
-    const checkPassword = await bcrypt.compare(password, teacher.password);
-
-    if (!checkPassword) {
-      res.status(422).json({ errors: ["Informe a senha correta"] });
-      return;
-    }
-
-    res.status(201).json({
-      id: teacher.id,
-      token: TeacherController.generateToken(teacher.id),
-    });
     // await createUserToken(teacher, req, res);
   }
 

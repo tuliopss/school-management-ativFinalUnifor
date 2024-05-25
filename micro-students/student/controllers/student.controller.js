@@ -1,9 +1,4 @@
 const Student = require("../models/student.schema");
-// const db = require("../db/conn");
-// const jwt = require("jsonwebtoken");
-// const Classroom = require("../models/Classroom");
-// const Teacher = require("../models/Teacher");
-// const jwtSecret = process.env.JWT_SECRET;
 
 module.exports = class StudentController {
   static async createStudent(req, res) {

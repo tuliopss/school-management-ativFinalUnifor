@@ -1,6 +1,6 @@
 // const Teacher = require("../models/Teacher");
 const jwt = require("jsonwebtoken");
-const Teacher = require("../models/teacher-schema");
+const Teacher = require("../teacher/models/teacher-schema");
 const jwtSecret = process.env.JWT_SECRET;
 
 const authGuard = async (req, res, next) => {

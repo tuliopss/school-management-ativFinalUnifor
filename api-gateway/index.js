@@ -4,13 +4,18 @@ const httpProxy = require("express-http-proxy");
 const app = express();
 const port = 3001;
 const { TEACHERS_API_URL, STUDENTS_API_URL } = require("./urls/urls");
+const validate = require("./middlewares/validate");
+const studentCreateValidations = require("./middlewares/students-validations");
 const teacherServiceProxy = httpProxy(TEACHERS_API_URL);
 const studentServiceProxy = httpProxy(STUDENTS_API_URL);
+
+app.use(express.json());
 
 app.use("/teacher", (req, res, next) => {
   teacherServiceProxy(req, res, next);
 });
-app.use("/student", (req, res, next) => {
+
+app.use("/student", studentCreateValidations(), validate, (req, res, next) => {
   studentServiceProxy(req, res, next);
 });
 
