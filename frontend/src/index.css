@@ -1,0 +1,13 @@
+body {
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* background-color: #121212; */
+  color: #000;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
