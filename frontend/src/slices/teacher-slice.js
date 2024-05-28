@@ -15,7 +15,6 @@ export const getTeachers = createAsyncThunk(
   "teacher/get",
   async (_, thunkAPI) => {
     const token = thunkAPI.getState().auth.user.token;
-    console.log(token);
     const data = await teacherService.getTeachers(token);
 
     if (data.errors) {

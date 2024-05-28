@@ -14,9 +14,36 @@ const initialState = {
 export const getStudents = createAsyncThunk(
   "student/get",
   async (_, thunkAPI) => {
-    const token = thunkAPI.getState().auth.user.token;
+    const token = await thunkAPI.getState().auth.user.token;
 
     const data = await studentService.getStudents(token);
+
+    if (data.errors) {
+      return thunkAPI.rejectWithValue(data.errors[0]);
+    }
+    return data;
+  }
+);
+
+export const createStudent = createAsyncThunk(
+  "student/create",
+  async (student, thunkAPI) => {
+    const token = await thunkAPI.getState().auth.user.token;
+    const data = await studentService.createStudent(token, student);
+
+    if (data.errors) {
+      return thunkAPI.rejectWithValue(data.errors[0]);
+    }
+
+    return data;
+  }
+);
+
+export const deleteStudent = createAsyncThunk(
+  "student/delete",
+  async (id, thunkAPI) => {
+    const token = await thunkAPI.getState().auth.user.token;
+    const data = await studentService.deleteStudent(token, id);
 
     if (data.errors) {
       return thunkAPI.rejectWithValue(data.errors[0]);
@@ -60,6 +87,52 @@ export const studentSlice = createSlice({
         state.success = true;
         state.error = null;
         state.students = action.payload;
+      })
+      .addCase(createStudent.pending, (state) => {
+        state.loading = true;
+        state.error = false;
+      })
+      .addCase(createStudent.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.error = null;
+        state.student = action.payload;
+      })
+      .addCase(createStudent.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        state.student = null;
+      })
+      .addCase(deleteStudent.pending, (state) => {
+        state.loading = true;
+        state.error = false;
+      })
+      .addCase(deleteStudent.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.error = null;
+        // state.photos = state.photos.filter((photo) => {
+        //   return photo._id !== action.payload.id;
+        // });
+        state.students = state.students.filter((st) => {
+          return st._id !== action.payload.id;
+        });
+        state.message = action.payload.message;
+      })
+      // .addCase(deleteStudent.fulfilled, (state, action) => {
+      //   console.log(action.payload.student);
+      //   state.loading = false;
+      //   state.success = true;
+      //   state.error = null;
+      //   state.message = action.payload.message;
+      //   state.students = state.students.filter((student) => {
+      //     return student._id !== action.payload.student.id;
+      //   });
+      // })
+      .addCase(deleteStudent.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        state.student = {};
       });
   },
 });

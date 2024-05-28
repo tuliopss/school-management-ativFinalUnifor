@@ -35,7 +35,7 @@ const Navbar = () => {
   };
   return (
     <nav id={styles.nav}>
-      <Link to='/'>ReactGram</Link>
+      <Link to='/'>School Management</Link>
 
       <form id={styles.search_form} onSubmit={handleSearch}>
         {/* <BsSearch /> */}
@@ -51,11 +51,11 @@ const Navbar = () => {
           <>
             {" "}
             <li>
-              <NavLink to='/'>Home</NavLink>
+              <NavLink to='/teachers'>Professores</NavLink>
             </li>
             {user && (
               <li>
-                <NavLink to={`users/${user._id}`}>OI</NavLink>
+                <NavLink to={`/students`}>Alunos</NavLink>
               </li>
             )}
             <li>

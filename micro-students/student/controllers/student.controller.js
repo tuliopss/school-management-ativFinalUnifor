@@ -10,12 +10,12 @@ module.exports = class StudentController {
     });
 
     if (checkEmail) {
-      res.status(404).json({ error: "Email já existente." });
+      res.status(422).json({ errors: ["Email já existente."] });
       return;
     }
 
     if (checkRegistration) {
-      res.status(404).json({ error: "Matrícula já cadastrada" });
+      res.status(422).json({ errors: ["Matrícula já cadastrada"] });
       return;
     }
 
@@ -60,9 +60,11 @@ module.exports = class StudentController {
       return;
     }
 
-    await Student.findOneAndDelete({ _id: id });
+    await Student.findByIdAndDelete({ _id: id });
 
-    res.status(200).json({ message: "Usuário deletado com sucesso." });
+    res
+      .status(200)
+      .json({ id: student._id, message: "Usuário deletado com sucesso." });
   }
 
   static async getStudentById(req, res) {

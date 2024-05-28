@@ -10,6 +10,7 @@ function TableTeacherComponent() {
   useEffect(() => {
     dispatch(getTeachers());
   }, [dispatch]);
+
   if (loading) {
     return <p>Carregando...</p>;
   }
