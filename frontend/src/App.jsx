@@ -9,6 +9,7 @@ import Login from "./pages/Auth/Login";
 import Navbar from "./components/Navbar";
 import { useAuth } from "./hooks/use-auth";
 import "bootstrap/dist/css/bootstrap.min.css";
+import StudentPage from "./pages/StudentPage";
 
 function App() {
   const { auth, loading } = useAuth();
@@ -21,6 +22,11 @@ function App() {
             <Route
               path='/home'
               element={auth ? <Home /> : <Navigate to='/login' />}
+            />
+            <Route
+              path='/student'
+              element={<StudentPage />}
+              // element={auth ? <StudentPage /> : <Navigate to='/login' />}
             />
             <Route
               path='/register'

@@ -43,6 +43,7 @@ module.exports = class StudentController {
 
       res.status(200).json(students);
     } catch (error) {
+      console.log(error);
       res
         .status(404)
         .json({ errors: ["Houve um erro, tente novamente mais tarde."] });

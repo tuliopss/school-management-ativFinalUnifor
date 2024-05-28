@@ -1,4 +1,5 @@
-export const api = "http://localhost:3001";
+export const apiTeacher = "http://localhost:3001";
+// export const apiStudent = "http://localhost:3002";
 
 export const requestConfig = (method, data, token = null) => {
   let config;

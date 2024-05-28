@@ -5,6 +5,7 @@ import TableTeacherComponent from "../components/TableTeacherComponent";
 const Home = () => {
   return (
     <div id={styles.home}>
+      <h2>Professores cadastrados:</h2>
       <TableTeacherComponent />
     </div>
   );

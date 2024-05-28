@@ -1,9 +1,9 @@
-import { api, requestConfig } from "../utils/api";
+import { apiTeacher, requestConfig } from "../utils/api";
 
 const register = async (user) => {
   const config = requestConfig("POST", user);
   try {
-    const res = await fetch(`${api}/teacher/register`, config);
+    const res = await fetch(`${apiTeacher}/teacher/register`, config);
     if (res) {
       localStorage.setItem("user", JSON.stringify(res));
     }
@@ -18,12 +18,12 @@ const login = async (user) => {
   const config = requestConfig("POST", user);
   console.log("user", user);
   try {
-    const res = await fetch(`${api}/teacher/login`, config)
+    const res = await fetch(`${apiTeacher}/teacher/login`, config)
       .then((res) => res.json())
       .catch((err) => err);
 
     if (res) {
-      localStorage.setItem("auth", JSON.stringify(res));
+      localStorage.setItem("user", JSON.stringify(res));
     }
 
     return res;
