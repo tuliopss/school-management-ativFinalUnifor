@@ -1,24 +1,71 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Auth.module.css";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { register, reset } from "../../slices/auth-slice";
+import authService from "../../services/auth-service";
+import Message from "../../components/Message";
 const Register = () => {
+  const [teacher, setTeacher] = useState({});
+
+  const handleChange = (e) => {
+    setTeacher({ ...teacher, [e.target.name]: e.target.value });
+  };
+
+  const dispatch = useDispatch();
+
+  const { loading, error } = useSelector((state) => state.auth);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    dispatch(register(teacher));
+  };
+
+  useEffect(() => {
+    dispatch(reset());
+  }, [dispatch]);
+
   return (
     // id={styles.register}
     <div id={styles.register}>
       <h2>Crie já sua conta!</h2>
       <p className={styles.subtitle}>Bem vindo ao Admin School</p>
 
-      <form>
-        <input type='text' name='name' placeholder='Seu nome' />
-        <input type='email' name='email' placeholder='Seu email' />
-        <input type='password' name='password' placeholder='Sua senha' />
+      <form onSubmit={handleSubmit}>
+        <input
+          type='text'
+          name='name'
+          placeholder='Seu nome'
+          onChange={handleChange}
+        />
+        <input
+          type='email'
+          name='email'
+          placeholder='Seu email'
+          onChange={handleChange}
+        />
+        <input
+          type='password'
+          name='password'
+          placeholder='Sua senha'
+          onChange={handleChange}
+        />
         <input
           type='password'
           name='confirmPassword'
           placeholder='Confirme Sua senha'
+          onChange={handleChange}
         />
-        <input type='text' name='subject' placeholder='Sua disciplina' />
-        <input type='submit' value='Cadastrar' />
+        <input
+          type='text'
+          name='subject'
+          placeholder='Sua disciplina'
+          onChange={handleChange}
+        />
+        {!loading && <input type='submit' value='Cadastrar' />}
+        {loading && <input type='submit' value='Aguarde...' disabled />}
+        {error && <Message msg={error} type='error' />}
       </form>
 
       <p>

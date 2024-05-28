@@ -19,7 +19,7 @@ module.exports = class TeacherController {
   };
   static async testeMicro(req, res) {
     console.log("teste");
-    res.send("oi micro");
+    res.json({ message: "oi micro" });
   }
 
   static async register(req, res) {
