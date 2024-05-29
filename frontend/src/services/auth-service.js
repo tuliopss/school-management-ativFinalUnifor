@@ -1,9 +1,9 @@
-import { apiTeacher, requestConfig } from "../utils/api";
+import { api, requestConfig } from "../utils/api";
 
 const register = async (user) => {
   const config = requestConfig("POST", user);
   try {
-    const res = await fetch(`${apiTeacher}/teacher/register`, config)
+    const res = await fetch(`${api}/teacher/register`, config)
       .then((res) => res.json())
       .catch((err) => err);
 
@@ -21,7 +21,7 @@ const login = async (user) => {
   const config = requestConfig("POST", user);
   console.log("user", user);
   try {
-    const res = await fetch(`${apiTeacher}/teacher/login`, config)
+    const res = await fetch(`${api}/teacher/login`, config)
       .then((res) => res.json())
       .catch((err) => err);
 

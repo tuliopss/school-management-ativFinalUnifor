@@ -7,6 +7,7 @@ import {
   createStudent,
   getStudentById,
   resetMessage,
+  updateStudent,
 } from "../../slices/student-slice";
 import { useNavigate, useParams } from "react-router-dom";
 import { useResetComponentMessage } from "../../hooks/use-reset-component-message";
@@ -16,19 +17,15 @@ const EditFormPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const resetMessage = useResetComponentMessage(dispatch);
-  console.log("FORMM");
   const { student, error, loading, message, success } = useSelector(
     (state) => state.student
   );
-  // const [name, setName] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [age, setAge] = useState("");
-  // const [grade, setGrade] = useState("");
-  // const [registration, setRegistration] = useState("");
-  const [studentData, setStudentData] = useState({});
-  const handleChange = (e) => {
-    setStudent({ ...student, [e.target.name]: e.target.value });
-  };
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [age, setAge] = useState("");
+  const [grade, setGrade] = useState("");
+  const [registration, setRegistration] = useState("");
+  const [studenState, setStudenState] = useState({});
 
   useEffect(() => {
     dispatch(getStudentById(id));
@@ -37,20 +34,29 @@ const EditFormPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    dispatch(createStudent(student));
-
+    const studentData = {
+      _id: id,
+      name,
+      age,
+      grade,
+    };
+    console.log(studentData);
+    dispatch(updateStudent(studentData));
+    navigate("/students");
     resetMessage();
   };
 
-  // useEffect(() => {
-  //   if (student) {
-  //     setName(student.name);
-  //     setEmail(student.email);
-  //     setAge(student.age);
-  //     setGrade(student.grade);
-  //     setRegistration(student.registration);
-  //   }
-  // }, [student]);
+  useEffect(() => {
+    if (student) {
+      setName(student.name);
+      setEmail(student.email);
+      setAge(student.age);
+      setGrade(student.grade);
+      setRegistration(student.registration);
+    }
+  }, [student]);
+
+  const fillStudentStateFields = () => {};
 
   return (
     <div id={styles.edit_profile}>
@@ -62,43 +68,52 @@ const EditFormPage = () => {
           type='text'
           placeholder='Nome'
           name='name'
-          onChange={handleChange}
-          value={student.name}
+          onChange={(e) => {
+            setName(e.target.value);
+          }}
+          value={name || ""}
         />
         <input
           type='email'
           placeholder='Email'
           name='email'
           disabled
-          value={student.email}
+          value={email || ""}
         />
         <input
           type='number'
           placeholder='Idade'
           name='age'
-          onChange={handleChange}
-          value={student.age}
+          onChange={(e) => {
+            setAge(e.target.value);
+          }}
+          value={age || ""}
         />
         <input
           type='text'
           placeholder='Série'
           name='grade'
-          onChange={handleChange}
-          value={student.grade}
+          onChange={(e) => {
+            setGrade(e.target.value);
+            console.log(grade);
+          }}
+          value={grade || ""}
         />
         <input
           type='text'
           placeholder='Código de matrícula'
           name='registration'
-          onChange={handleChange}
-          value={student.registration}
+          disabled
+          onChange={(e) => {
+            setName(e.target.value);
+          }}
+          value={registration || ""}
         />
 
         {!loading && <input type='submit' value='Atualizar' />}
         {loading && <input type='submit' value='Aguarde...' disabled />}
         {error && <Message msg={error} type='error' />}
         {message && <Message msg={message} type='success' />}
-        {console.log("msg", message)}
       </form>
     </div>
   );

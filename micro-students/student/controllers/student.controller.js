@@ -98,16 +98,20 @@ module.exports = class StudentController {
     }
 
     const updatedStudent = {
+      id,
       name,
       age,
       grade,
     };
     try {
-      console.log(updatedStudent);
+      // console.log(updatedStudent);
 
       await Student.findByIdAndUpdate(id, updatedStudent);
 
-      res.status(200).json({ message: "Estudante atualizado com sucesso." });
+      res.status(200).json({
+        student: updatedStudent,
+        message: "Estudante atualizadosd com sucesso.",
+      });
     } catch (error) {
       console.log(error);
       res

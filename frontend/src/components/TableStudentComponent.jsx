@@ -81,17 +81,20 @@ import Button from "react-bootstrap/Button";
 import { BsFillEyeFill, BsFillTrash3Fill, BsPencilFill } from "react-icons/bs";
 import styles from "../pages/StudentPage.module.css";
 import { Link } from "react-router-dom";
+import { useResetComponentMessage } from "../hooks/use-reset-component-message";
 
 function TableStudentComponent() {
   const { students, loading } = useSelector((state) => state.student);
   const dispatch = useDispatch();
-  console.log("render");
+  const resetMessage = useResetComponentMessage(dispatch);
+
   useEffect(() => {
     dispatch(getStudents());
   }, [dispatch]);
 
   const handleDelete = (id) => {
     dispatch(deleteStudent(id));
+    resetMessage();
   };
 
   if (loading) {

@@ -1,9 +1,9 @@
-import { apiTeacher, requestConfig } from "../utils/api";
+import { api, requestConfig } from "../utils/api";
 
 const getTeachers = async (token) => {
   const config = requestConfig("GET", null, token);
   try {
-    const res = await fetch(`${apiTeacher}/teacher/`, config);
+    const res = await fetch(`${api}/teacher/`, config);
 
     return res.json();
   } catch (error) {
@@ -15,7 +15,7 @@ const login = async (user) => {
   const config = requestConfig("POST", user);
 
   try {
-    const res = await fetch(`${apiTeacher}/teacher/login`, config);
+    const res = await fetch(`${api}/teacher/login`, config);
 
     if (res) {
       localStorage.setItem("user", JSON.stringify(res));

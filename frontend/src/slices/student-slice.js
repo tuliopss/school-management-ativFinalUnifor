@@ -52,6 +52,23 @@ export const createStudent = createAsyncThunk(
     return data;
   }
 );
+export const updateStudent = createAsyncThunk(
+  "student/update",
+  async (studentData, thunkAPI) => {
+    const token = await thunkAPI.getState().auth.user.token;
+    const data = await studentService.updateStudent(token, studentData._id, {
+      name: studentData.name,
+      age: studentData.age,
+      grade: studentData.grade,
+    });
+
+    if (data.errors) {
+      return thunkAPI.rejectWithValue(data.errors[0]);
+    }
+
+    return data;
+  }
+);
 
 export const deleteStudent = createAsyncThunk(
   "student/delete",
@@ -120,7 +137,7 @@ export const studentSlice = createSlice({
         state.loading = false;
         state.success = true;
         state.error = null;
-        state.student = action.payload;
+        state.students.push(action.payload); //CHANGE HERE
         state.message = `Aluno inserido com sucesso!`;
       })
       .addCase(createStudent.rejected, (state, action) => {
@@ -136,25 +153,36 @@ export const studentSlice = createSlice({
         state.loading = false;
         state.success = true;
         state.error = null;
-        // state.photos = state.photos.filter((photo) => {
-        //   return photo._id !== action.payload.id;
-        // });
         state.students = state.students.filter((st) => {
           return st._id !== action.payload.id;
         });
         state.message = action.payload.message;
       })
-      // .addCase(deleteStudent.fulfilled, (state, action) => {
-      //   console.log(action.payload.student);
-      //   state.loading = false;
-      //   state.success = true;
-      //   state.error = null;
-      //   state.message = action.payload.message;
-      //   state.students = state.students.filter((student) => {
-      //     return student._id !== action.payload.student.id;
-      //   });
-      // })
       .addCase(deleteStudent.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        state.student = {};
+      })
+      .addCase(updateStudent.pending, (state) => {
+        state.loading = true;
+        state.error = false;
+      })
+      .addCase(updateStudent.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.error = null;
+        state.student = action.payload;
+        state.students.map((student) => {
+          if (student._id === action.payload.id) {
+            console.log("student e pay", action.payload.student);
+            return { ...student, ...action.payload.student };
+          }
+
+          return student;
+        });
+        state.message = action.payload.message;
+      })
+      .addCase(updateStudent.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
         state.student = {};
