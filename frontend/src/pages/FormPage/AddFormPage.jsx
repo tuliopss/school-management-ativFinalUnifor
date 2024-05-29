@@ -3,14 +3,14 @@ import styles from "./FormPage.module.css";
 // import { updateProfile, userProfile } from "../../slices/userSlice";
 import { useSelector, useDispatch } from "react-redux";
 import Message from "../../components/Message";
-import { createStudent } from "../../slices/student-slice";
+import { createStudent, resetMessage } from "../../slices/student-slice";
 import { useNavigate } from "react-router-dom";
-// import Message from "../../components/Message/Message";
-// import { useResetComponentMessage } from "../../hooks/useResetComponentMessage";
+import { useResetComponentMessage } from "../../hooks/use-reset-component-message";
 
 const FormPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const resetMessage = useResetComponentMessage(dispatch);
   const {
     student: studentState,
     error,
@@ -18,7 +18,6 @@ const FormPage = () => {
     message,
     success,
   } = useSelector((state) => state.student);
-  // const resetMessage = useResetComponentMessage(dispatch);
 
   const [student, setStudent] = useState({});
 
@@ -30,13 +29,18 @@ const FormPage = () => {
     e.preventDefault();
 
     dispatch(createStudent(student));
+    // if (success) {
+    //   navigate("/students");
+    // }
+
+    resetMessage();
   };
 
-  useEffect(() => {
-    if (success && !error) {
-      navigate("/students");
-    }
-  }, [success, error, navigate]);
+  // useEffect(() => {
+  //   if (success && !error) {
+  //     navigate("/students");
+  //   }
+  // }, [success, error, navigate]);
 
   return (
     <div id={styles.edit_profile}>
@@ -78,8 +82,8 @@ const FormPage = () => {
         {!loading && <input type='submit' value='Registrar' />}
         {loading && <input type='submit' value='Aguarde...' disabled />}
         {error && <Message msg={error} type='error' />}
-        {console.log("ERRO", error)}
         {message && <Message msg={message} type='success' />}
+        {console.log("msg", message)}
       </form>
     </div>
   );

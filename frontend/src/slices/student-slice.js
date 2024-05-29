@@ -97,6 +97,7 @@ export const studentSlice = createSlice({
         state.success = true;
         state.error = null;
         state.student = action.payload;
+        state.message = `Aluno inserido com sucesso!`;
       })
       .addCase(createStudent.rejected, (state, action) => {
         state.loading = false;

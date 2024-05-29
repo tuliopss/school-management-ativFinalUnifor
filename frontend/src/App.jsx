@@ -9,11 +9,12 @@ import Login from "./pages/Auth/Login";
 import Navbar from "./components/Navbar";
 import { useAuth } from "./hooks/use-auth";
 import "bootstrap/dist/css/bootstrap.min.css";
-import StudentPage from "./pages/StudentPage";
+// import StudentPage from "./pages/StudentPage";
 import FormPage from "./pages/FormPage/FormPage";
 import Main from "./pages/Main";
 import TableTeacherComponent from "./components/TableTeacherComponent";
 import TableStudentComponent from "./components/TableStudentComponent";
+import StudentPage from "./pages/StudentPage";
 
 function App() {
   const { auth, loading } = useAuth();
@@ -41,8 +42,8 @@ function App() {
             />
             <Route
               path='/form'
-              element={<FormPage />}
-              // element={auth ? <FormPage /> : <Navigate to='/login' />}
+              // element={<FormPage />}
+              element={auth ? <FormPage /> : <Navigate to='/login' />}
             />
             <Route
               path='/register'
