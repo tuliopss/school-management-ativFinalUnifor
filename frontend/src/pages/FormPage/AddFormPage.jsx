@@ -36,14 +36,8 @@ const FormPage = () => {
     resetMessage();
   };
 
-  // useEffect(() => {
-  //   if (success && !error) {
-  //     navigate("/students");
-  //   }
-  // }, [success, error, navigate]);
-
   return (
-    <div id={styles.edit_profile}>
+    <div>
       <h2>Registre um aluno:</h2>
       <p className={styles.subtitle}>Insira as informações do aluno abaixo:</p>
 

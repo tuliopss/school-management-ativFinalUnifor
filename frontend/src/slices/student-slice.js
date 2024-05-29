@@ -25,6 +25,20 @@ export const getStudents = createAsyncThunk(
   }
 );
 
+export const getStudentById = createAsyncThunk(
+  "student/getById",
+  async (id, thunkAPI) => {
+    const token = await thunkAPI.getState().auth.user.token;
+
+    const data = await studentService.getStudentById(token, id);
+
+    if (data.errors) {
+      return thunkAPI.rejectWithValue(data.errors[0]);
+    }
+    return data;
+  }
+);
+
 export const createStudent = createAsyncThunk(
   "student/create",
   async (student, thunkAPI) => {
@@ -87,6 +101,16 @@ export const studentSlice = createSlice({
         state.success = true;
         state.error = null;
         state.students = action.payload;
+      })
+      .addCase(getStudentById.pending, (state) => {
+        state.loading = true;
+        state.error = false;
+      })
+      .addCase(getStudentById.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.error = null;
+        state.student = action.payload;
       })
       .addCase(createStudent.pending, (state) => {
         state.loading = true;

@@ -132,7 +132,9 @@ function TableStudentComponent() {
                     <BsFillTrash3Fill />
                   </Button>
                   <Button variant='warning'>
-                    <BsPencilFill />
+                    <Link to={`/edit/${student._id}`}>
+                      <BsPencilFill />
+                    </Link>
                   </Button>
                   <Button variant='primary'>
                     <BsFillEyeFill />

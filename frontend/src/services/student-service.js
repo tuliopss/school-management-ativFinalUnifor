@@ -12,6 +12,18 @@ const getStudents = async (token) => {
   }
 };
 
+const getStudentById = async (token, id) => {
+  const config = requestConfig("GET", null, token);
+
+  try {
+    const res = await fetch(`${apiTeacher}/student/${id}`, config);
+
+    return res.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const createStudent = async (token, student) => {
   const config = requestConfig("POST", student, token);
 
@@ -40,6 +52,7 @@ const deleteStudent = async (token, id) => {
 
 const studentService = {
   getStudents,
+  getStudentById,
   createStudent,
   deleteStudent,
 };
