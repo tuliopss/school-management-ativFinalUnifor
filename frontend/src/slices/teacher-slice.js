@@ -24,19 +24,16 @@ export const getTeachers = createAsyncThunk(
   }
 );
 
-// export const login = createAsyncThunk("auth/login", async (user, thunkAPI) => {
-//   const data = await authService.login(user);
+export const getProfile = createAsyncThunk(
+  "teacher/profile",
+  async (user, thunkAPI) => {
+    const token = thunkAPI.getState().auth.user.token;
 
-//   if (data.errors) {
-//     return thunkAPI.rejectWithValue(data.errors[0]);
-//   }
+    const data = await teacherService.getProfile(user, token);
 
-//   return data;
-// });
-
-// export const logout = createAsyncThunk("auth/logout", async (req, res) => {
-//   await authService.logout();
-// });
+    return data;
+  }
+);
 
 export const teacherSlice = createSlice({
   name: "teacher",
@@ -59,29 +56,17 @@ export const teacherSlice = createSlice({
         state.success = true;
         state.error = null;
         state.teachers = action.payload;
+      })
+      .addCase(getProfile.pending, (state) => {
+        state.loading = true;
+        state.error = false;
+      })
+      .addCase(getProfile.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.error = null;
+        state.teacher = action.payload;
       });
-
-    //   .addCase(logout.fulfilled, (state, action) => {
-    //     state.loading = false;
-    //     state.success = true;
-    //     state.error = null;
-    //     state.user = null;
-    //   })
-    //   .addCase(login.pending, (state) => {
-    //     state.loading = true;
-    //     state.error = false;
-    //   })
-    //   .addCase(login.fulfilled, (state, action) => {
-    //     state.loading = false;
-    //     state.success = true;
-    //     state.error = null;
-    //     state.user = action.payload;
-    //   })
-    //   .addCase(login.rejected, (state, action) => {
-    //     state.loading = false;
-    //     state.error = action.payload;
-    //     state.user = null;
-    //   });
   },
 });
 export const { resetMessage } = teacherSlice.actions;

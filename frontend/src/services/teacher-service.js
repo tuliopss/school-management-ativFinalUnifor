@@ -11,15 +11,10 @@ const getTeachers = async (token) => {
   }
 };
 
-const login = async (user) => {
-  const config = requestConfig("POST", user);
-
+const getProfile = async (user, token) => {
+  const config = requestConfig("GET", user, token);
   try {
-    const res = await fetch(`${api}/teacher/login`, config);
-
-    if (res) {
-      localStorage.setItem("user", JSON.stringify(res));
-    }
+    const res = await fetch(`${api}/teacher/profile`, config);
 
     return res.json();
   } catch (error) {
@@ -27,14 +22,9 @@ const login = async (user) => {
   }
 };
 
-const logout = () => {
-  localStorage.removeItem("user");
-};
-
 const teacherService = {
-  login,
   getTeachers,
-  logout,
+  getProfile,
 };
 
 export default teacherService;

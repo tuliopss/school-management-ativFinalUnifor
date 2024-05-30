@@ -1,0 +1,34 @@
+#profile {
+  width: 50%;
+  margin: 0 auto;
+  background-color: #dbdbdb;
+}
+
+.profile_header h2 {
+  text-align: center;
+  font-weight: bold;
+  border-bottom: 1px solid #363636;
+  margin-top: 1em;
+  padding-bottom: 0.5em;
+}
+
+.profile_description {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 1.5em;
+  gap: 2em;
+}
+
+.profile_description span {
+  font-size: 1.5em;
+}
+
+.profile_field {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 0.5em;
+}

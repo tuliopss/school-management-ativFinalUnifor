@@ -110,7 +110,7 @@ function TableStudentComponent() {
       <Table responsive>
         <thead>
           <tr>
-            <th>#ID</th>
+            <th>#Código de matrícula:</th>
             <th>Nome</th>
             <th>Email</th>
             <th>Idade</th>
@@ -122,7 +122,7 @@ function TableStudentComponent() {
           {students &&
             students.map((student) => (
               <tr key={student._id}>
-                <td>{student._id}</td>
+                <td>{student.registration}</td>
                 <td>{student.name}</td>
                 <td>{student.email}</td>
                 <td>{student.age}</td>
@@ -139,9 +139,9 @@ function TableStudentComponent() {
                       <BsPencilFill />
                     </Link>
                   </Button>
-                  <Button variant='primary'>
+                  {/* <Button variant='primary'>
                     <BsFillEyeFill />
-                  </Button>
+                  </Button> */}
                 </td>
               </tr>
             ))}

@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import styles from "./Navbar.module.css";
 
 import { NavLink, Link, useNavigate } from "react-router-dom";
-// import {
-//   BsSearch,
-//   BsHouseDoorFill,
-//   BsFillPersonFill,
-//   BsFillCameraFill,
-// } from "react-icons/bs";
+import {
+  BsSearch,
+  BsHouseDoorFill,
+  BsFillPersonFill,
+  BsFillCameraFill,
+} from "react-icons/bs";
 import { useAuth } from "../hooks/use-auth";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, reset } from "../slices/auth-slice";
@@ -49,7 +49,6 @@ const Navbar = () => {
       <ul id={styles.nav_links}>
         {auth ? (
           <>
-            {" "}
             <li>
               <NavLink to='/teachers'>Professores</NavLink>
             </li>
@@ -59,7 +58,9 @@ const Navbar = () => {
               </li>
             )}
             <li>
-              <NavLink to={`/profile`}>{/* <BsFillPersonFill /> */}</NavLink>
+              <NavLink to={`/profile`}>
+                Meu perfil <BsFillPersonFill />
+              </NavLink>
             </li>
             <li>
               <span onClick={handleLogout}>Sair</span>

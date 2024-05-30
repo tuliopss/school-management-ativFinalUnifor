@@ -3,6 +3,7 @@ import styles from "./Auth.module.css";
 import { login } from "../../slices/auth-slice";
 import { useEffect, useState } from "react";
 import Message from "../../components/Message";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const [teacher, setTeacher] = useState({});
@@ -41,6 +42,9 @@ const Login = () => {
         {!loading && <input type='submit' value='Entrar' />}
         {loading && <input type='submit' value='Aguarde...' disabled />}
         {error && <Message msg={error} type='error' />}
+        <p>
+          Não possui uma conta?<Link to={"/register"}> Registre-se aqui</Link>
+        </p>
       </form>
     </div>
   );

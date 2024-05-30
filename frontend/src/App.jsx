@@ -16,6 +16,7 @@ import TableTeacherComponent from "./components/TableTeacherComponent";
 import TableStudentComponent from "./components/TableStudentComponent";
 import StudentPage from "./pages/StudentPage";
 import EditFormPage from "./pages/FormPage/EditFormPage";
+import Profile from "./pages/Profile";
 
 function App() {
   const { auth, loading } = useAuth();
@@ -35,6 +36,11 @@ function App() {
             <Route
               path='/teachers'
               element={auth ? <Home /> : <Navigate to='/login' />}
+            />
+
+            <Route
+              path='/profile'
+              element={auth ? <Profile /> : <Navigate to='/login' />}
             />
             <Route
               path='/students'

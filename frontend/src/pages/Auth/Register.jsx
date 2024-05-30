@@ -5,11 +5,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { register, reset } from "../../slices/auth-slice";
 import authService from "../../services/auth-service";
 import Message from "../../components/Message";
+
 const Register = () => {
   const [teacher, setTeacher] = useState({});
 
+  const subjects = ["Matemática", "História", "Geografia", "Gramática"];
+
   const handleChange = (e) => {
     setTeacher({ ...teacher, [e.target.name]: e.target.value });
+  };
+
+  const handleSubject = (e) => {
+    setTeacher({
+      ...teacher,
+      subject: e.target.value,
+    });
   };
 
   const dispatch = useDispatch();
@@ -18,7 +28,7 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    console.log(teacher);
     dispatch(register(teacher));
   };
 
@@ -57,12 +67,18 @@ const Register = () => {
           placeholder='Confirme Sua senha'
           onChange={handleChange}
         />
-        <input
-          type='text'
-          name='subject'
-          placeholder='Sua disciplina'
-          onChange={handleChange}
-        />
+
+        <select className='input' onChange={handleSubject} name='subject'>
+          <option disabled selected>
+            Selecione
+          </option>
+          {subjects.map((subject) => (
+            <option value={subject} key={subject}>
+              {subject}
+            </option>
+          ))}
+        </select>
+        <br />
         {!loading && <input type='submit' value='Cadastrar' />}
         {loading && <input type='submit' value='Aguarde...' disabled />}
         {error && <Message msg={error} type='error' />}
