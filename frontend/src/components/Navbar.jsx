@@ -26,25 +26,10 @@ const Navbar = () => {
 
     navigate("/login");
   };
-  const handleSearch = (e) => {
-    e.preventDefault();
 
-    if (query) {
-      return navigate("/search?q=" + query);
-    }
-  };
   return (
     <nav id={styles.nav}>
       <Link to='/'>School Management</Link>
-
-      <form id={styles.search_form} onSubmit={handleSearch}>
-        {/* <BsSearch /> */}
-        <input
-          type='text'
-          placeholder='Pesquisar'
-          onChange={(e) => setQuery(e.target.value)}
-        />
-      </form>
 
       <ul id={styles.nav_links}>
         {auth ? (
