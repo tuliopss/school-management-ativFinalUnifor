@@ -6,8 +6,12 @@ Sistema desenvolvido em Node.js, React.js,e MongoDB como banco de dados. O backe
 Instruções:
 Para rodar o projeto, necessita-se da execução dos serviços simultaneamente.
 Dentro dos próprios diretórios serão executados os comandos:
+
 npm run gateway --> API Gateway será executada na porta 3001
+
 npm run msteacher --> O microsserviço de professores será executado na porta 3000
+
 npm run msstudent --> O microsserviço de estudantes executado na porta 3002
+
 npm run dev --> O frontend será executado na porta 5173
 
